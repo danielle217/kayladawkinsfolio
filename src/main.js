@@ -12,7 +12,7 @@ const sizes = {
 
 // Scene Created
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("#ffd6e4");
+scene.background = new THREE.Color("#e7d2d6");
 
 //for toggle
 let theme = "day"
@@ -61,8 +61,20 @@ const textureMap = {
         night: "/textures/room/chair.webp"
     },
     Table_Lamp001: {
-        day: "/textures/room/lamp_new.webp",
-        night: "/textures/room/lamp_new.webp"
+        day: "/textures/room/lamp_new_new.webp",
+        night: "/textures/room/lamp_new_new.webp"
+    },
+    Coffee_Shop_3d_graphic_illustration: {
+        day: "/textures/room/day/bookshelves_decor.webp",
+        night: "/textures/room/night/bookshelves_decor_night.webp"
+    },
+    Headphonesa: {  
+        day: "/textures/room/day/desk.webp",
+        night: "/textures/room/night/desk_night.webp"
+    },
+    Pencil_and_pen_holder: { 
+       day: "/textures/room/day/desk.webp",
+        night: "/textures/room/night/desk_night.webp"
     },
 }
 
@@ -97,17 +109,22 @@ function findTextureKey(obj){
     return null;
 }
 
-loader.load("/models/Room_Port.glb", (glb) => {
+loader.load("/models/RoomPort_New.glb", (glb) => {
     const unmatched = [];
 
     glb.scene.traverse(child => {
-        if (child.isMesh) return;
+        if (!child.isMesh) return;
 
         const key = findTextureKey(child);
 
         if (!key){
             unmatched.push(child.name);
             child.material = new THREE.MeshBasicMaterial({color: 0xff00ff});
+            return;
+        }
+
+        if (child.name === "room_atomsphere") {
+            child.visible = false;
             return;
         }
 
